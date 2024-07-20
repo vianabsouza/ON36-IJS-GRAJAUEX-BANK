@@ -1,4 +1,4 @@
-import Conta from "./Conta";
+import Conta from "./conta";
 
 export default class Cliente {
   private id: number;

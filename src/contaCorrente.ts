@@ -1,5 +1,5 @@
-import Cliente from "./Cliente";
-import Conta from "./Conta";
+import Cliente from "./cliente";
+import Conta from "./conta";
 
 class ContaCorrente extends Conta{
   private limiteChequeEspecial: number;
