@@ -21,4 +21,4 @@
 * Prestação de contas diário e semanal para toda a comunidade
 
 ## Diagrama de Classes
-![Grajuex Bank UML](img/uml-grajauex-bank.jpg.jpg)
+![Grajauex Bank UML](img/uml-grajauex-bank.jpg.jpg)
