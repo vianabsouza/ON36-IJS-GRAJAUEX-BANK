@@ -8,4 +8,12 @@ class ContaCorrente extends Conta{
     super(id, cliente, numeroCartao, saldo);
     this.limiteChequeEspecial = 2000;
   }
+
+  public getLimiteChequeEspecial(): number {
+    return this.limiteChequeEspecial;
+  }
+
+  public setDepositarChequeEspecial(valor: number): void {
+    this.setSaldo(this.getSaldo() - valor)
+  }
 }

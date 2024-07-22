@@ -9,7 +9,15 @@ class ContaPoupanca extends Conta{
     this.taxaJuros = 0.02;
   }
 
-  public adicionarTaxaJuros(): void{
+  public getTaxaJuros(): number{
+    return this.taxaJuros;
+  }
+
+  public setTaxaJuros(): void{
     this.setSaldo(this.getSaldo() + this.getSaldo() * this.taxaJuros)
+  }
+
+  public consultarTaxaJuroa(): string{
+    return `A taxa de juros da sua conta poupança é de ${this.taxaJuros * 100}%`;
   }
 }
