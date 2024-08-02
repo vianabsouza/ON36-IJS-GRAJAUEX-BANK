@@ -38,7 +38,7 @@ export class GerenteService {
     return manager;
   }
 
-  updateManager(id: number): Gerente {
+  updateManager(id: number, contaId: number): Gerente {
     const managers = this.readManager();
     const manager = managers.find(manager => manager.id === Number(id));
 
@@ -47,6 +47,7 @@ export class GerenteService {
     }
 
     manager.id = id;
+    manager.contaId = contaId;
 
     this.writeManager(managers);
 
