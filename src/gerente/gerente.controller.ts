@@ -1,18 +1,18 @@
 import { Body, Controller, Delete, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { Cliente } from 'src/cliente/cliente.model';
-import { ClienteService } from 'src/cliente/cliente.service';
+import { GerenteService } from './gerente.service';
+import { Gerente } from './gerente.model';
 
 @Controller('gerente')
 export class GerenteController {
-  constructor(private readonly clienteService: ClienteService){}
+  constructor(private readonly gerenteService: GerenteService){}
 
   @Post()
-  createCustomer(@Body('nomeCompleto') nomeCompleto: string, @Body('endereco') endereco: string, @Body('telefone') telefone: string): Cliente {
-    return this.clienteService.createCustomer(nomeCompleto, endereco, telefone);
+  createManager(@Body('id') id: number): Gerente {
+    return this.gerenteService.createManager(id);
   }
 
   @Delete(':id')
   removeCustomer(@Param('id', ParseIntPipe) id: number):void {
-    return this.clienteService.removeCustomer(id);
+    return this.gerenteService.removeManager(id);
   }
 }
