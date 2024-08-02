@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Conta, TipoConta } from './conta.model';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -27,5 +27,41 @@ export class ContaService {
     accounts.push(newAccount);
     this.writeAccounts(accounts);
     return newAccount;
+  }
+
+  findById(id: number): Conta {
+    const accounts = this.readAccounts();
+    const account = accounts.find(account => account.id === Number(id));
+
+    if(!account) {
+      throw new NotFoundException(`Conta com o ${id} não encontrado`)
+    }
+
+    return account;
+  }
+
+  updateAccount(id: number, saldo: number, tipo: TipoConta): Conta {
+    const accounts = this.readAccounts();
+    const account = accounts.find(account => account.id === Number(id));
+
+    if(!account) {
+      throw new NotFoundException(`Conta com o ${id} não encontrado`)
+    }
+
+    account.saldo = saldo;
+    account.tipo = tipo;
+
+    this.writeAccounts(accounts);
+
+    return account;
+  }
+
+  removeAccount(id: number): void {
+    const accounts = this.readAccounts();
+    const account = accounts.findIndex(account => account.id === Number(id));
+
+    accounts.splice(account, 1);
+    this.writeAccounts(accounts);
+
   }
 }
