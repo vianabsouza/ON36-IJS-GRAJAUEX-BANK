@@ -1,8 +1,4 @@
-export enum TipoConta {
-  CORRENTE = 'corrente',
-  POUPANCA = 'poupanca'
-}
-
+import { TipoConta } from "src/enums/tipo.conta";
 export class Conta {
   constructor(
     public id: number,
