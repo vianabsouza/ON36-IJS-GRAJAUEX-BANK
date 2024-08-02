@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nomeCompleto": "Barbara Viana de Souza",
+    "endereco": "Rua das Bandeiras, 00",
+    "telefone": "000000000"
+  },
+  {
+    "id": 2,
+    "nomeCompleto": "Barbara Souza de Viana",
+    "endereco": "Rua das Flechas, 00",
+    "telefone": "000000000"
+  },
+  {
+    "id": 3,
+    "nomeCompleto": "Barbara Viana",
+    "endereco": "Rua das Palmas, 10",
+    "telefone": "00000-0000"
+  }
+]
