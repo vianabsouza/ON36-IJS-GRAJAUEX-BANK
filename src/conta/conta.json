@@ -3,5 +3,16 @@
     "id": 1,
     "saldo": 500,
     "tipo": "debit"
+  },
+  {
+    "id": 2,
+    "saldo": 1500,
+    "tipo": "credit"
+  },
+  {
+    "id": 3,
+    "nome": "Barbara",
+    "saldo": 1500,
+    "tipo": "corrente"
   }
 ]

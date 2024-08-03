@@ -10,10 +10,11 @@ import { ContaService } from './conta/conta.service';
 import { ContaController } from './conta/conta.controller';
 import { GerenteService } from './gerente/gerente.service';
 import { GerenteController } from './gerente/gerente.controller';
+import { ContaFactory } from './conta/factories/conta.factory';
 
 @Module({
   imports: [ClienteModule, ContaModule, GerenteModule],
   controllers: [AppController, ClienteController, ContaController, GerenteController],
-  providers: [AppService, ClienteService, ContaService, GerenteService],
+  providers: [AppService, ClienteService, ContaService, GerenteService, ContaFactory],
 })
 export class AppModule {}
