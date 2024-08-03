@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ContaService } from './conta.service';
-import { Conta, TipoConta } from './conta.model';
+import { Conta } from './conta.model';
+import { TipoConta } from 'src/enums/tipo.conta';
 
 @Controller('conta')
 export class ContaController {
@@ -8,8 +9,8 @@ export class ContaController {
   }
 
   @Post()
-  createAccount(@Body('clienteId') clienteId: number, @Body('saldo') saldo: number, @Body('tipo') tipo: TipoConta): Conta {
-    return this.contaService.createAccount(clienteId, saldo, tipo);
+  createAccount(@Body('nome') nome: string, @Body('saldo') saldo: number, @Body('tipo') tipo: TipoConta): Conta {
+    return this.contaService.createAccount(nome, saldo, tipo);
   }
 
   @Get(':id')
@@ -18,8 +19,8 @@ export class ContaController {
   }
 
   @Put(':id')
-  updateAccount(@Body('id') id: number, @Body('saldo') saldo: number, @Body('tipo') tipo: TipoConta): Conta {
-    return this.contaService.updateAccount(id, saldo, tipo);
+  updateAccount(@Body('id') id: number, @Body('nome') nome: string, @Body('saldo') saldo: number, @Body('tipo') tipo: TipoConta): Conta {
+    return this.contaService.updateAccount(nome, id, saldo, tipo);
   }
 
   @Delete(':id')
