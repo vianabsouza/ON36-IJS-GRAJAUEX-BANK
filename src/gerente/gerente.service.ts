@@ -1,67 +1,64 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Cliente } from 'src/cliente/cliente.model';
+import { Gerente } from './gerente.model';
 import * as path from 'path';
 import * as fs from 'fs';
 
 @Injectable()
 export class GerenteService {
-  private readonly filePath = path.resolve('src/cliente/cliente.json');
+  private readonly filePath = path.resolve('src/gerente/gerente.json');
 
-  private readCustomer(): Cliente[] {
+  private readManager(): Gerente[] {
     const data = fs.readFileSync(this.filePath, 'utf8');
-    return JSON.parse(data) as Cliente[]
+    return JSON.parse(data) as Gerente[]
   }
 
-  private writeCustomer(customers: Cliente[]): void {
-    fs.writeFileSync(this.filePath, JSON.stringify(customers, null, 2), 'utf8');
+  private writeManager(managers: Gerente[]): void {
+    fs.writeFileSync(this.filePath, JSON.stringify(managers, null, 2), 'utf8');
   }
 
-  createCustomer(nomeCompleto: string, endereco: string, telefone: string): Cliente {
-    const customers = this.readCustomer();
-    const newCustomer = {
-      id: customers.length > 0 ? customers[customers.length - 1].id + 1 : 1,
-      nomeCompleto,
-      endereco,
-      telefone,
+  createManager(contaId: number): Gerente {
+    const managers = this.readManager();
+    const newManager = {
+      id: managers.length > 0 ? managers[managers.length - 1].id + 1 : 1,
+      contaId
     }
-    customers.push(newCustomer);
-    this.writeCustomer(customers);
-    return newCustomer;
+    managers.push(newManager);
+    this.writeManager(managers);
+    return newManager;
   }
 
-  findById(id: number): Cliente {
-    const customers = this.readCustomer();
-    const customer = customers.find(customer => customer.id === Number(id));
+  findById(id: number): Gerente {
+    const managers = this.readManager();
+    const manager = managers.find(manager => manager.id === Number(id));
 
-    if(!customer) {
-      throw new NotFoundException(`Cliente com o id ${id} não encontrado`);
+    if(!manager) {
+      throw new NotFoundException(`Gerente com o id ${id} não encontrado`);
     }
 
-    return customer;
+    return manager;
   }
 
-  updateCustomer(id: number, nomeCompleto: string, endereco: string, telefone: string): Cliente {
-    const customers = this.readCustomer();
-    const customer = customers.find(customer => customer.id === Number(id));
+  updateManager(id: number, contaId: number): Gerente {
+    const managers = this.readManager();
+    const manager = managers.find(manager => manager.id === Number(id));
 
-    if(!customer) {
-      throw new NotFoundException(`Cliente com o id ${id} não encontrado`);
+    if(!manager) {
+      throw new NotFoundException(`Gerente com o id ${id} não encontrado`);
     }
 
-    customer.nomeCompleto = nomeCompleto;
-    customer.endereco = endereco;
-    customer.telefone = telefone;
+    manager.id = id;
+    manager.contaId = contaId;
 
-    this.writeCustomer(customers);
+    this.writeManager(managers);
 
-    return customer;
+    return manager;
   }
 
-  removeCustomer(id: number): void {
-    const customers = this.readCustomer();
-    const customerIndex = customers.findIndex(customer => customer.id === Number(id));
+  removeManager(id: number): void {
+    const managers = this.readManager();
+    const managerIndex = managers.findIndex(manager => manager.id === Number(id));
 
-    customers.splice(customerIndex, 1);
-    this.writeCustomer(customers);
+    managers.splice(managerIndex, 1);
+    this.writeManager(managers);
   }
 }
