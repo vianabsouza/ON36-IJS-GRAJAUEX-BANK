@@ -1,6 +1,6 @@
 import { TipoConta } from "src/enums/tipo.conta";
 export interface Conta {
-    id: number,
+    id: string,
     nome: string,
     saldo: number,
     tipo: TipoConta

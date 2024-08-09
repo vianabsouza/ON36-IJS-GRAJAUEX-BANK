@@ -1,6 +1,6 @@
 export class Gerente {
   constructor(
-    public id: number,
-    public contaId: number,
+    public id: string,
+    public contaId: string,
   ) {}
 }

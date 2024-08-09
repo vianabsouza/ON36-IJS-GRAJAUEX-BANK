@@ -12,17 +12,17 @@ export class ClienteController {
   }
 
   @Get(':id')
-  findById(@Param('id', ParseIntPipe) id: number): Cliente {
+  findById(@Param('id', ParseIntPipe) id: string): Cliente {
     return this.clienteService.findById(id);
   }
 
   @Put(':id')
-  updateCustomer(@Param('id', ParseIntPipe) id: number, @Body('nomeCompleto') nomeCompleto: string, @Body('endereco') endereco: string, @Body('telefone') telefone: string): Cliente {
+  updateCustomer(@Param('id', ParseIntPipe) id: string, @Body('nomeCompleto') nomeCompleto: string, @Body('endereco') endereco: string, @Body('telefone') telefone: string): Cliente {
     return this.clienteService.updateCustomer(id, nomeCompleto, endereco, telefone)
   }
 
   @Delete(':id')
-  removeCustomer(@Param('id', ParseIntPipe) id: number):void {
+  removeCustomer(@Param('id', ParseIntPipe) id: string):void {
     return this.clienteService.removeCustomer(id);
   }
 }

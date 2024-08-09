@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Gerente } from './gerente.model';
+import { uuid } from 'uuidv4'
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -16,10 +17,10 @@ export class GerenteService {
     fs.writeFileSync(this.filePath, JSON.stringify(managers, null, 2), 'utf8');
   }
 
-  createManager(contaId: number): Gerente {
+  createManager(contaId: string): Gerente {
     const managers = this.readManager();
     const newManager = {
-      id: managers.length > 0 ? managers[managers.length - 1].id + 1 : 1,
+      id: uuid(),
       contaId
     }
     managers.push(newManager);
@@ -27,9 +28,9 @@ export class GerenteService {
     return newManager;
   }
 
-  findById(id: number): Gerente {
+  findById(id: string): Gerente {
     const managers = this.readManager();
-    const manager = managers.find(manager => manager.id === Number(id));
+    const manager = managers.find(manager => manager.id === id);
 
     if(!manager) {
       throw new NotFoundException(`Gerente com o id ${id} não encontrado`);
@@ -38,9 +39,9 @@ export class GerenteService {
     return manager;
   }
 
-  updateManager(id: number, contaId: number): Gerente {
+  updateManager(id: string, contaId: string): Gerente {
     const managers = this.readManager();
-    const manager = managers.find(manager => manager.id === Number(id));
+    const manager = managers.find(manager => manager.id === id);
 
     if(!manager) {
       throw new NotFoundException(`Gerente com o id ${id} não encontrado`);
@@ -54,9 +55,9 @@ export class GerenteService {
     return manager;
   }
 
-  removeManager(id: number): void {
+  removeManager(id: string): void {
     const managers = this.readManager();
-    const managerIndex = managers.findIndex(manager => manager.id === Number(id));
+    const managerIndex = managers.findIndex(manager => manager.id === id);
 
     managers.splice(managerIndex, 1);
     this.writeManager(managers);
