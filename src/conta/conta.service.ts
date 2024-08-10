@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Conta } from './conta.model';
 import { TipoConta } from 'src/enums/tipo.conta';
 import { ContaFactory } from './factories/conta.factory'
+import { Cliente } from 'src/cliente/cliente.model';
 import { uuid } from 'uuidv4';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -21,12 +22,12 @@ export class ContaService {
     fs.writeFileSync(this.filePath, JSON.stringify(accounts, null, 2), 'utf8');
   }
 
-  createAccount(nome: string, saldo: number, tipo: TipoConta): Conta {
+  createAccount(cliente: Cliente, saldo: number, tipo: TipoConta): Conta {
     const accounts = this.readAccounts();
     const newAccount = this.ContaFactory.createAccount(
       tipo,
       uuid(),
-      nome,
+      cliente,
       saldo,
     );
 
@@ -46,7 +47,7 @@ export class ContaService {
     return account;
   }
 
-  updateAccount(nome: string, id: string, saldo: number, tipo: TipoConta): Conta {
+  updateAccount(id: string, saldo: number, tipo: TipoConta): Conta {
     const accounts = this.readAccounts();
     const account = accounts.find(account => account.id === id);
 
@@ -54,7 +55,6 @@ export class ContaService {
       throw new NotFoundException(`Conta com o ${id} não encontrado`)
     }
 
-    account.nome = nome;
     account.saldo = saldo;
     account.tipo = tipo;
 
