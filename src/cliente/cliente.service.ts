@@ -1,5 +1,6 @@
 import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { Cliente } from './cliente.model';
+import { uuid } from 'uuidv4';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -19,7 +20,7 @@ export class ClienteService {
   createCustomer(nomeCompleto: string, endereco: string, telefone: string): Cliente {
     const customers = this.readCustomer();
     const newCustomer = {
-      id: customers.length > 0 ? customers[customers.length - 1].id + 1 : 1,
+      id: uuid(),
       nomeCompleto,
       endereco,
       telefone,
@@ -29,9 +30,9 @@ export class ClienteService {
     return newCustomer;
   }
 
-  findById(id: number): Cliente {
+  findById(id: string): Cliente {
     const customers = this.readCustomer();
-    const customer = customers.find(customer => customer.id === Number(id));
+    const customer = customers.find(customer => customer.id === id);
 
     if(!customer) {
       throw new NotFoundException(`Cliente com o id ${id} não encontrado`);
@@ -40,9 +41,9 @@ export class ClienteService {
     return customer;
   }
 
-  updateCustomer(id: number, nomeCompleto: string, endereco: string, telefone: string): Cliente {
+  updateCustomer(id: string, nomeCompleto: string, endereco: string, telefone: string): Cliente {
     const customers = this.readCustomer();
-    const customer = customers.find(customer => customer.id === Number(id));
+    const customer = customers.find(customer => customer.id === id);
 
     if(!customer) {
       throw new NotFoundException(`Cliente com o id ${id} não encontrado`);
@@ -57,9 +58,9 @@ export class ClienteService {
     return customer;
   }
 
-  removeCustomer(id: number): void {
+  removeCustomer(id: string): void {
     const customers = this.readCustomer();
-    const customerIndex = customers.findIndex(customer => customer.id === Number(id));
+    const customerIndex = customers.findIndex(customer => customer.id === id);
 
     customers.splice(customerIndex, 1);
     this.writeCustomer(customers);

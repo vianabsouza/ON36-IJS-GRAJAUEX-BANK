@@ -1,7 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Conta } from './conta.model';
 import { TipoConta } from 'src/enums/tipo.conta';
-import  { ContaFactory } from './factories/conta.factory'
+import { ContaFactory } from './factories/conta.factory'
+import { Cliente } from 'src/cliente/cliente.model';
+import { uuid } from 'uuidv4';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -20,12 +22,12 @@ export class ContaService {
     fs.writeFileSync(this.filePath, JSON.stringify(accounts, null, 2), 'utf8');
   }
 
-  createAccount(nome: string, saldo: number, tipo: TipoConta): Conta {
+  createAccount(cliente: Cliente, saldo: number, tipo: TipoConta): Conta {
     const accounts = this.readAccounts();
     const newAccount = this.ContaFactory.createAccount(
       tipo,
-      accounts.length > 0 ? accounts[accounts.length - 1].id  + 1 : 1,
-      nome,
+      uuid(),
+      cliente,
       saldo,
     );
 
@@ -34,9 +36,9 @@ export class ContaService {
     return newAccount;
   }
 
-  findById(id: number): Conta {
+  findById(id: string): Conta {
     const accounts = this.readAccounts();
-    const account = accounts.find(account => account.id === Number(id));
+    const account = accounts.find(account => account.id === id);
 
     if(!account) {
       throw new NotFoundException(`Conta com o ${id} não encontrado`)
@@ -45,15 +47,14 @@ export class ContaService {
     return account;
   }
 
-  updateAccount(nome: string, id: number, saldo: number, tipo: TipoConta): Conta {
+  updateAccount(id: string, saldo: number, tipo: TipoConta): Conta {
     const accounts = this.readAccounts();
-    const account = accounts.find(account => account.id === Number(id));
+    const account = accounts.find(account => account.id === id);
 
     if(!account) {
       throw new NotFoundException(`Conta com o ${id} não encontrado`)
     }
 
-    account.nome = nome;
     account.saldo = saldo;
     account.tipo = tipo;
 
@@ -62,9 +63,9 @@ export class ContaService {
     return account;
   }
 
-  removeAccount(id: number): void {
+  removeAccount(id: string): void {
     const accounts = this.readAccounts();
-    const account = accounts.findIndex(account => account.id === Number(id));
+    const account = accounts.findIndex(account => account.id === id);
 
     accounts.splice(account, 1);
     this.writeAccounts(accounts);
